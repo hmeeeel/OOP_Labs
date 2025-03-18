@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\lines.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\lines.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\ellipses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\ellipses.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\idraw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\idraw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\lines.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\lines.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\polygons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\polygons.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\polylines.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\polylines.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\rectanglebase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,14 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\shapecreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\shapecreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|c:\\users\\\u0430\u043D\u043D\u0430\\desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\oop_labs\\labs\\oop\\oop\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}|OOP\\OOP.csproj|solutionrelative:oop\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,7 +62,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
+              "Title": "Polygons.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Polygons.cs",
+              "RelativeDocumentMoniker": "OOP\\Polygons.cs",
+              "ToolTip": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Polygons.cs",
+              "RelativeToolTip": "OOP\\Polygons.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T15:32:02.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Polylines.cs",
+              "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Polylines.cs",
+              "RelativeDocumentMoniker": "OOP\\Polylines.cs",
+              "ToolTip": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Polylines.cs*",
+              "RelativeToolTip": "OOP\\Polylines.cs*",
+              "ViewState": "AgIAABEAAAAAAAAAAAA4wC4AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-18T15:22:54.173Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "IDraw.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\IDraw.cs",
               "RelativeDocumentMoniker": "OOP\\IDraw.cs",
@@ -67,46 +101,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 10,
               "Title": "ShapeCreate.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\ShapeCreate.cs",
               "RelativeDocumentMoniker": "OOP\\ShapeCreate.cs",
               "ToolTip": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\ShapeCreate.cs*",
               "RelativeToolTip": "OOP\\ShapeCreate.cs*",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T12:56:56.032Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Ellipses.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Ellipses.cs",
               "RelativeDocumentMoniker": "OOP\\Ellipses.cs",
               "ToolTip": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Ellipses.cs",
               "RelativeToolTip": "OOP\\Ellipses.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T12:53:26.217Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 8,
               "Title": "Rectangles.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Rectangles.cs",
               "RelativeDocumentMoniker": "OOP\\Rectangles.cs",
               "ToolTip": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Rectangles.cs",
               "RelativeToolTip": "OOP\\Rectangles.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAwAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T12:43:57.304Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "RectangleBase.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\RectangleBase.cs",
               "RelativeDocumentMoniker": "OOP\\RectangleBase.cs",
@@ -119,20 +153,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Lines.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Lines.cs",
               "RelativeDocumentMoniker": "OOP\\Lines.cs",
               "ToolTip": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\Lines.cs",
               "RelativeToolTip": "OOP\\Lines.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAuwBkAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T12:21:37.389Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "ShapeBase.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\ShapeBase.cs",
               "RelativeDocumentMoniker": "OOP\\ShapeBase.cs",
@@ -145,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\MainWindow.xaml",
               "RelativeDocumentMoniker": "OOP\\MainWindow.xaml",
@@ -157,13 +191,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "OOP\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\\u0410\u043D\u043D\u0430\\Desktop\\4 \u0441\u0435\u043C\u0435\u0441\u0442\u0440\\OOP_Labs\\labs\\OOP\\OOP\\MainWindow.xaml.cs",
               "RelativeToolTip": "OOP\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcAAAALAAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAgwGsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-18T11:55:00.826Z",
               "EditorCaption": ""

@@ -25,6 +25,14 @@ namespace OOP
         {
             return new Ellipses(color, penWidth, start, width, height);
         }
+        public IDraw CreatePolyline(Brush color, int penWidth, List<Point> points)
+        {
+            return new Polylines(color, penWidth, points);
+        }
 
+        public IDraw CreatePolygon(Brush color, int penWidth, List<Point> points)
+        {
+            return new Polygons(color, penWidth, points);
+        }
     }
 }

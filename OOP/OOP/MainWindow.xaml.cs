@@ -31,8 +31,8 @@ public partial class MainWindow : Window
         var line = shapeFactory.CreateLine(
             Brushes.Black,
             2,
-            new Point(50, 50),
-            new Point(200, 50));
+            new Point(25, 20),
+            new Point(25, 100)); 
 
         shapes.Add(line);
         RedrawCanvas();
@@ -43,9 +43,9 @@ public partial class MainWindow : Window
         var rectangle = shapeFactory.CreateRectangle(
             Brushes.Blue,
             2,
-            new Point(50, 100),
-            150,
-            100);
+            new Point(63, 20),
+            98,
+            80);
 
         shapes.Add(rectangle);
         RedrawCanvas();
@@ -56,9 +56,9 @@ public partial class MainWindow : Window
         var ellipse = shapeFactory.CreateEllipse(
             Brushes.Red,
             2,
-            new Point(250, 100),
-            150,
-            100);
+            new Point(150, 100),
+            100,
+            150);
 
         shapes.Add(ellipse);
         RedrawCanvas();
@@ -76,5 +76,44 @@ public partial class MainWindow : Window
         {
             shape.Draw(canvas);
         }
+    }
+
+    private void btnDrawPolyline_Click(object sender, RoutedEventArgs e)
+    {
+        var points = new List<Point>
+            {
+                new Point(250, 20),
+                new Point(240, 40),
+                new Point(270, 70),
+                new Point(250, 90),
+                new Point(290, 120),
+                new Point(290, 30)
+            };
+
+        var polyline = shapeFactory.CreatePolyline(
+            Brushes.Green,
+            2,
+            points);
+
+        shapes.Add(polyline);
+        RedrawCanvas();
+    }
+    private void btnDrawPolygon_Click(object sender, RoutedEventArgs e)
+    {
+        var points = new List<Point>
+            {
+                new Point(310, 20),
+                new Point(350, 100),
+                new Point(400, 250),
+                new Point(350, 250)
+            };
+
+        var polygon = shapeFactory.CreatePolygon(
+            Brushes.Purple,
+            2,
+            points);
+
+        shapes.Add(polygon);
+        RedrawCanvas();
     }
 }

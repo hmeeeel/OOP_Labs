@@ -16,8 +16,10 @@
         <Button x:Name="btnDrawLine" Content="Линия" Margin="5" Padding="5" Click="btnDrawLine_Click"/>
         <Button x:Name="btnDrawRectangle" Content="Прямоугольник" Margin="5" Padding="5" Click="btnDrawRectangle_Click"/>
         <Button x:Name="btnDrawEllipse" Content="Эллипс" Margin="5" Padding="5" Click="btnDrawEllipse_Click"/>
-      
-        <Button x:Name="btnClear" Content="Очистить" Margin="5" Padding="5" Click="btnClear_Click"/>
+         <Button x:Name="btnDrawPolyline" Content="Ломаная" Margin="5" Padding="5" Click="btnDrawPolyline_Click"/>
+         <Button x:Name="btnDrawPolygon" Content="Многоугольник" Margin="5" Padding="5" Click="btnDrawPolygon_Click"/>
+
+         <Button x:Name="btnClear" Content="Очистить" Margin="5" Padding="5" Click="btnClear_Click"/>
     </StackPanel>
 
     <Canvas x:Name="canvas" Grid.Row="1" Background="White" Margin="10"/>
