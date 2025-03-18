@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
 
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+        <Button x:Name="btnDrawLine" Content="Линия" Margin="5" Padding="5" Click="btnDrawLine_Click"/>
+        <Button x:Name="btnDrawRectangle" Content="Прямоугольник" Margin="5" Padding="5" Click="btnDrawRectangle_Click"/>
+        <Button x:Name="btnDrawEllipse" Content="Эллипс" Margin="5" Padding="5" Click="btnDrawEllipse_Click"/>
+      
+        <Button x:Name="btnClear" Content="Очистить" Margin="5" Padding="5" Click="btnClear_Click"/>
+    </StackPanel>
+
+    <Canvas x:Name="canvas" Grid.Row="1" Background="White" Margin="10"/>
     </Grid>
 </Window>
