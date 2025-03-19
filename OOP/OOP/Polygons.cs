@@ -8,22 +8,13 @@ using System.Windows.Media;
 using System.Windows;
 namespace OOP
 {
-    public class Polygons: ShapeBase
+    public class Polygons : PointCollections
     {
         public List<Point> Points { get; set; }
 
-        public Polygons(Brush color, int penWidth, List<Point> points)
+        public Polygons(Brush color, int penWidth, List<Point> points, Brush fill = null)
+            : base(color, penWidth, points)
         {
-
-            this.PenColor = color;
-            this.PenWidth = penWidth;
-
-            if (points.Count > 0)
-                this.PositionStart = points[0];
-            else
-                this.PositionStart = new Point();
-
-            this.Points = points;
         }
 
         public override void Draw(Canvas canvas)
@@ -34,13 +25,7 @@ namespace OOP
                 StrokeThickness = PenWidth
             };
 
-            PointCollection pointCollection = new PointCollection();
-            foreach (var point in Points)
-            {
-                pointCollection.Add(point);
-            }
-            polygon.Points = pointCollection;
-
+            polygon.Points = CreatePointCollection();
             canvas.Children.Add(polygon);
         }
     }

@@ -16,7 +16,7 @@ namespace OOP
         public int PenWidth { get; set; }
         public Point PositionStart { get; set; }
         public abstract void Draw(Canvas canvas);
-
+  
 
     }
 }

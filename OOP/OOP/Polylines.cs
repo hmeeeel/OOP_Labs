@@ -12,21 +12,12 @@ using System.Windows.Media;
 
 namespace OOP
 {
-    public class Polylines : ShapeBase
+    public class Polylines : PointCollections
     {
         public List<Point> Points { get; set; }
-        public Polylines(Brush color, int penWidth, List<Point> points)
+        public Polylines(Brush color, int penWidth, List<Point> points, Brush fill = null)
+            : base(color, penWidth, points)
         {
-
-            this.PenColor = color;
-            this.PenWidth = penWidth;
-
-            if (points.Count > 0)
-                this.PositionStart = points[0];
-            else
-                this.PositionStart = new Point();
-
-            this.Points = points;
         }
 
         public override void Draw(Canvas canvas)
@@ -37,13 +28,7 @@ namespace OOP
                 StrokeThickness = PenWidth
             };
 
-            PointCollection pointCollection = new PointCollection();
-            foreach (var point in Points)
-            {
-                pointCollection.Add(point);  
-            }
-
-            polyline.Points = pointCollection;  
+            polyline.Points = CreatePointCollection();
             canvas.Children.Add(polyline); 
         }
     }
