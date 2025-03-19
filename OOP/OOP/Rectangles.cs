@@ -19,8 +19,8 @@ namespace OOP
         //    this.Width = width;
         //    this.Height = height;
         //}
-        public Rectangles(Brush color, int penWidth, Point start, double width, double height)
-                         : base(color, penWidth, start, width, height)
+        public Rectangles(Brush color, int penWidth, Point start, double width, double height, Brush fill)
+                         : base(color, penWidth, start, width, height, fill)
         {}
         public override void Draw(Canvas canvas)
         {
@@ -29,7 +29,8 @@ namespace OOP
                 Width = Width,
                 Height = Height,
                 Stroke = PenColor,
-                StrokeThickness = PenWidth
+                StrokeThickness = PenWidth,
+                Fill = Fill
             };
 
             Canvas.SetLeft(rectangle, PositionStart.X);

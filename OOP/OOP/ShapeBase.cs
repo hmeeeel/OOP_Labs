@@ -17,6 +17,6 @@ namespace OOP
         public Point PositionStart { get; set; }
         public abstract void Draw(Canvas canvas);
   
-
+        public Brush Fill { get; set; }
     }
 }

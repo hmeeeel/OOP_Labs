@@ -11,8 +11,8 @@ namespace OOP
 {
      public class Ellipses : RectangleBase
     {
-        public Ellipses(Brush color, int penWidth, Point start, double width, double height)
-                        : base(color, penWidth, start, width, height)
+        public Ellipses(Brush color, int penWidth, Point start, double width, double height, Brush fill)
+                        : base(color, penWidth, start, width, height, fill)
         {}
 
         public override void Draw(Canvas canvas)
@@ -22,7 +22,8 @@ namespace OOP
                 Width = Width,
                 Height = Height,
                 Stroke = PenColor,
-                StrokeThickness = PenWidth
+                StrokeThickness = PenWidth,
+                Fill = Fill
             };
 
             Canvas.SetLeft(ellipse, PositionStart.X);

@@ -45,7 +45,8 @@ public partial class MainWindow : Window
             2,
             new Point(63, 20),
             98,
-            80);
+            80,
+            Brushes.Black);
 
         shapes.Add(rectangle);
         RedrawCanvas();
@@ -58,7 +59,8 @@ public partial class MainWindow : Window
             2,
             new Point(150, 100),
             100,
-            150);
+            150,
+            Brushes.Red);
 
         shapes.Add(ellipse);
         RedrawCanvas();
@@ -93,7 +95,8 @@ public partial class MainWindow : Window
         var polyline = shapeFactory.CreatePolyline(
             Brushes.Green,
             2,
-            points);
+            points
+            );
 
         shapes.Add(polyline);
         RedrawCanvas();
@@ -111,9 +114,26 @@ public partial class MainWindow : Window
         var polygon = shapeFactory.CreatePolygon(
             Brushes.Purple,
             2,
-            points);
+            points,
+            Brushes.Black);
 
         shapes.Add(polygon);
+
+        var points2 = new List<Point>
+            {
+                new Point(380, 20),
+                new Point(450, 150),
+                new Point(500, 300),
+                new Point(420, 290)
+            };
+
+
+        var polygon2 = shapeFactory.CreatePolygon(
+            Brushes.Purple,
+            2,
+            points2);  
+
+        shapes.Add(polygon2);
         RedrawCanvas();
     }
 }

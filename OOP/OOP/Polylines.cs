@@ -14,8 +14,7 @@ namespace OOP
 {
     public class Polylines : PointCollections
     {
-        public List<Point> Points { get; set; }
-        public Polylines(Brush color, int penWidth, List<Point> points, Brush fill = null)
+        public Polylines(Brush color, int penWidth, List<Point> points)
             : base(color, penWidth, points)
         {
         }

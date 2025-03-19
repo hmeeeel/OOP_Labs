@@ -10,10 +10,13 @@ namespace OOP
 {
     public class Polygons : PointCollections
     {
-        public List<Point> Points { get; set; }
+        public Polygons(Brush color, int penWidth, List<Point> points, Brush fill)
+            : base(color, penWidth, points, fill)
+        {
+        }
 
-        public Polygons(Brush color, int penWidth, List<Point> points, Brush fill = null)
-            : base(color, penWidth, points)
+        public Polygons(Brush color, int penWidth, List<Point> points)
+            : base(color, penWidth, points) 
         {
         }
 
@@ -22,7 +25,8 @@ namespace OOP
             Polygon polygon = new Polygon
             {
                 Stroke = PenColor,
-                StrokeThickness = PenWidth
+                StrokeThickness = PenWidth,
+                Fill = Fill,
             };
 
             polygon.Points = CreatePointCollection();

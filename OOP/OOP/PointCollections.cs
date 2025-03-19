@@ -23,6 +23,13 @@ namespace OOP
                 this.PositionStart = new Point();
 
             this.Points = points;
+            this.Fill = null;
+        }
+
+        protected PointCollections(Brush color, int penWidth, List<Point> points, Brush fill)
+    : this(color, penWidth, points)  
+        {
+            this.Fill = fill;  
         }
 
         protected PointCollection CreatePointCollection()
