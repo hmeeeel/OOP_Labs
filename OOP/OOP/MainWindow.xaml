@@ -5,23 +5,99 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OOP"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Paint" Height="592" Width="740">
     <Grid>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
-        <Button x:Name="btnDrawLine" Content="Линия" Margin="5" Padding="5" Click="btnDrawLine_Click"/>
-        <Button x:Name="btnDrawRectangle" Content="Прямоугольник" Margin="5" Padding="5" Click="btnDrawRectangle_Click"/>
-        <Button x:Name="btnDrawEllipse" Content="Эллипс" Margin="5" Padding="5" Click="btnDrawEllipse_Click"/>
-         <Button x:Name="btnDrawPolyline" Content="Ломаная" Margin="5" Padding="5" Click="btnDrawPolyline_Click"/>
-         <Button x:Name="btnDrawPolygon" Content="Многоугольник" Margin="5" Padding="5" Click="btnDrawPolygon_Click"/>
+        <!-- фигуры -->
+        <Border Grid.Row="0" Background="#F0F0F0" BorderBrush="#CCCCCC" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Button x:Name="btnDrawLine" Content="Линия" Margin="5" Padding="10,5" Click="btnDrawLine_Click"/>
+                <Button x:Name="btnDrawRectangle" Content="Прямоугольник" Margin="5" Padding="10,5" Click="btnDrawRectangle_Click"/>
+                <Button x:Name="btnDrawEllipse" Content="Эллипс" Margin="5" Padding="10,5" Click="btnDrawEllipse_Click"/>
+                <Button x:Name="btnDrawPolyline" Content="Ломаная" Margin="5" Padding="10,5" Click="btnDrawPolyline_Click"/>
+                <Button x:Name="btnDrawPolygon" Content="Многоугольник" Margin="5" Padding="10,5" Click="btnDrawPolygon_Click"/>
+                <Button x:Name="btnClear" Content="Очистить" Margin="5" Padding="10,5" Click="btnClear_Click"/>
+            </StackPanel>
+        </Border>
 
-         <Button x:Name="btnClear" Content="Очистить" Margin="5" Padding="5" Click="btnClear_Click"/>
-    </StackPanel>
+        <!-- стиль -->
+        <Border Grid.Row="1" Background="#F8F8F8" BorderBrush="#CCCCCC" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <!-- толщина -->
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Толщина:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cmbPenWidth" Width="50" SelectedIndex="1">
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                    </ComboBox>
+                </StackPanel>
 
-    <Canvas x:Name="canvas" Grid.Row="1" Background="White" Margin="10"/>
+                <!-- контур -->
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Цвет контура:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cmbPenColor" Width="100" SelectedIndex="0">
+                        <ComboBoxItem Content="Черный" Tag="Black"/>
+                        <ComboBoxItem Content="Красный" Tag="Red"/>
+                        <ComboBoxItem Content="Синий" Tag="Blue"/>
+                        <ComboBoxItem Content="Зеленый" Tag="Green"/>
+                        <ComboBoxItem Content="Фиолетовый" Tag="Purple"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- заливка -->
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Цвет заливки:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cmbFillColor" Width="100" SelectedIndex="5">
+                        <ComboBoxItem Content="Черный" Tag="Black"/>
+                        <ComboBoxItem Content="Красный" Tag="Red"/>
+                        <ComboBoxItem Content="Синий" Tag="Blue"/>
+                        <ComboBoxItem Content="Зеленый" Tag="Green"/>
+                        <ComboBoxItem Content="Фиолетовый" Tag="Purple"/>
+                        <ComboBoxItem Content="Нет заливки" Tag="Transparent"/>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Undo/Redo, Save/Load -->
+        <Border Grid.Row="2" Background="#F0F0F0" BorderBrush="#CCCCCC" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Margin="10">
+
+                <Button x:Name="btnUndo" Content="Отмена" Margin="5" Padding="10,5" Click="btnUndo_Click">
+                    <Button.ToolTip>
+                        <ToolTip>Отменить последнее действие</ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="btnRedo" Content="Повтор" Margin="5" Padding="10,5" Click="btnRedo_Click">
+                    <Button.ToolTip>
+                        <ToolTip>Повторить отмененное действие</ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Separator Margin="10,0" Width="1" Background="#CCCCCC"/>
+                <Button x:Name="btnSave" Content="Сохранить" Margin="5" Padding="10,5" Click="btnSave_Click">
+                    <Button.ToolTip>
+                        <ToolTip>Сохранить рисунок в файл</ToolTip>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="btnLoad" Content="Загрузить" Margin="5" Padding="10,5" Click="btnLoad_Click">
+                    <Button.ToolTip>
+                        <ToolTip>Загрузить рисунок из файла</ToolTip>
+                    </Button.ToolTip>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="3" BorderBrush="#CCCCCC" BorderThickness="1" Margin="10">
+            <Canvas x:Name="canvas" Background="White"/>
+        </Border>
     </Grid>
 </Window>
