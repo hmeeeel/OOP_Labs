@@ -7,7 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Shapes;
-namespace OOP
+using OOP.Shape.Base;
+namespace OOP.Shape.Implementations
 {
     public class Rectangles : RectangleBase
     {

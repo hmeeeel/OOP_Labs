@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows;
+using OOP.Interfaces;
+using OOP.Shape.Implementations;
 
-namespace OOP
+namespace OOP.Shape
 {
     public class ShapeCreate
     {

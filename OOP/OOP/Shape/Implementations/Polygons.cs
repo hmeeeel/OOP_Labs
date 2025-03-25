@@ -6,7 +6,8 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
-namespace OOP
+using OOP.Shape.Base;
+namespace OOP.Shape.Implementations
 {
     public class Polygons : PointCollections
     {

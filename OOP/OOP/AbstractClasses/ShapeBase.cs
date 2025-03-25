@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
+using OOP.Interfaces;
 
 
-namespace OOP
+namespace OOP.AbstractClasses
 {
     public abstract class ShapeBase : IDraw
     {

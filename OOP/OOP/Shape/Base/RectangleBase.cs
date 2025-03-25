@@ -1,8 +1,8 @@
-﻿
+﻿using OOP.AbstractClasses;
 using System.Windows;
 using System.Windows.Media;
 
-namespace OOP
+namespace OOP.Shape.Base
 {
    public abstract class RectangleBase : ShapeBase
     {
@@ -11,12 +11,12 @@ namespace OOP
 
         protected RectangleBase(Brush color, int penWidth, Point start, double width, double height, Brush fill)
         {
-            this.PenColor = color;
-            this.PenWidth = penWidth;
-            this.PositionStart = start;
-            this.Width = width;
-            this.Height = height;
-            this.Fill = fill;
+            PenColor = color;
+            PenWidth = penWidth;
+            PositionStart = start;
+            Width = width;
+            Height = height;
+            Fill = fill;
         }
     }
 }

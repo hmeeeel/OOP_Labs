@@ -9,7 +9,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Icons\" />
+    <None Remove="Icons\circle.png" />
+    <None Remove="Icons\ellips.png" />
+    <None Remove="Icons\plus.png" />
+    <None Remove="Icons\polygon.png" />
+    <None Remove="Icons\polyline.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\circle.png" />
+    <Resource Include="Icons\line.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\ellips.png" />
+    <Resource Include="Icons\plus.png" />
+    <Resource Include="Icons\polygon.png" />
+    <Resource Include="Icons\polyline.png" />
+    <Resource Include="Icons\rectangle.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
 
 </Project>

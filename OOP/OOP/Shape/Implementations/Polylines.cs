@@ -9,8 +9,9 @@ using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
+using OOP.Shape.Base;
 
-namespace OOP
+namespace OOP.Shape.Implementations
 {
     public class Polylines : PointCollections
     {

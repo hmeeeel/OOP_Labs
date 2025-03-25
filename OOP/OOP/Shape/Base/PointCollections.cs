@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
-namespace OOP
+using OOP.AbstractClasses;
+namespace OOP.Shape.Base
 {
     public abstract class PointCollections : ShapeBase
     {
@@ -14,22 +15,22 @@ namespace OOP
 
         protected PointCollections(Brush color, int penWidth, List<Point> points)
         {
-            this.PenColor = color;
-            this.PenWidth = penWidth;
+            PenColor = color;
+            PenWidth = penWidth;
 
             if (points.Count > 0)
-                this.PositionStart = points[0];
+                PositionStart = points[0];
             else
-                this.PositionStart = new Point();
+                PositionStart = new Point();
 
-            this.Points = points;
-            this.Fill = null;
+            Points = points;
+            Fill = null;
         }
 
         protected PointCollections(Brush color, int penWidth, List<Point> points, Brush fill)
     : this(color, penWidth, points)  
         {
-            this.Fill = fill;  
+            Fill = fill;  
         }
 
         protected PointCollection CreatePointCollection()

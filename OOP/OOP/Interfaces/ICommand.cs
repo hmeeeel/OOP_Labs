@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 
-namespace OOP
+namespace OOP.Interfaces
 {
-    public interface IDraw
+    interface ICommand
     {
-        void Draw(Canvas canvas);
     }
 }

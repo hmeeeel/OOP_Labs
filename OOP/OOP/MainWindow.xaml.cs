@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using OOP.Interfaces;
+using OOP.Shape;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -187,6 +189,10 @@ public partial class MainWindow : Window
     }
 
     private void btnLoad_Click(object sender, RoutedEventArgs e)
+    {
+    }
+
+    private void btnAddPlugin_Click(object sender, RoutedEventArgs e)
     {
     }
 }

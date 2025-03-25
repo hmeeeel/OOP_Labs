@@ -8,17 +8,18 @@ using System.Windows.Controls;
 using System.Windows;
 //using Line = System.Windows.Shapes.Line;
 using System.Windows.Shapes;
-namespace OOP
+using OOP.AbstractClasses;
+namespace OOP.Shape.Implementations
 {
     public class Lines : ShapeBase
     {
         public Point PositionEnd { get; set; }
         public Lines(Brush color, int width, Point start, Point end)
         {
-            this.PenColor = color;
-            this.PenWidth = width;
-            this.PositionStart = start;
-            this.PositionEnd = end;
+            PenColor = color;
+            PenWidth = width;
+            PositionStart = start;
+            PositionEnd = end;
         }
 
         public override void Draw(Canvas canvas)

@@ -17,11 +17,46 @@
         <!-- фигуры -->
         <Border Grid.Row="0" Background="#F0F0F0" BorderBrush="#CCCCCC" BorderThickness="0,0,0,1">
             <StackPanel Orientation="Horizontal" Margin="10">
+                <!--  
                 <Button x:Name="btnDrawLine" Content="Линия" Margin="5" Padding="10,5" Click="btnDrawLine_Click"/>
                 <Button x:Name="btnDrawRectangle" Content="Прямоугольник" Margin="5" Padding="10,5" Click="btnDrawRectangle_Click"/>
                 <Button x:Name="btnDrawEllipse" Content="Эллипс" Margin="5" Padding="10,5" Click="btnDrawEllipse_Click"/>
                 <Button x:Name="btnDrawPolyline" Content="Ломаная" Margin="5" Padding="10,5" Click="btnDrawPolyline_Click"/>
                 <Button x:Name="btnDrawPolygon" Content="Многоугольник" Margin="5" Padding="10,5" Click="btnDrawPolygon_Click"/>
+                <Button x:Name="btnAddPlugin" Content="+" Margin="5" Padding="10,5" Click="btnAddPlugin_Click"/>
+                <Button x:Name="btnClear" Content="Очистить" Margin="5" Padding="10,5" Click="btnClear_Click"/>
+                 -->
+                <Button x:Name="btnDrawLine" Click="btnDrawLine_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/line.png" Width="24" Height="24" Margin="3" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnDrawRectangle" Click="btnDrawRectangle_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/rectangle.png" Width="24" Height="24" Margin="3"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnDrawEllipse" Click="btnDrawEllipse_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/circle.png" Width="24" Height="24" Margin="3"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnDrawPolyline" Click="btnDrawPolyline_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/polyline.png" Width="24" Height="24" Margin="3"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnDrawPolygon" Click="btnDrawPolygon_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/polygon.png" Width="24" Height="24" Margin="3"/>
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="btnAddPlugin" Click="btnAddPlugin_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/plus.png" Width="24" Height="24" Margin="3"/>
+                    </StackPanel>
+                </Button>
                 <Button x:Name="btnClear" Content="Очистить" Margin="5" Padding="10,5" Click="btnClear_Click"/>
             </StackPanel>
         </Border>
