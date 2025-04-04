@@ -19,7 +19,7 @@ namespace OOP.Shape.Base
             PenWidth = penWidth;
 
             if (points.Count > 0)
-                PositionStart = points[0];
+                PositionStart = points[0]; // 1ая точка
             else
                 PositionStart = new Point();
 

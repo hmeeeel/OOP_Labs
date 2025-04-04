@@ -22,8 +22,8 @@ namespace OOP;
 public partial class MainWindow : Window
 {
 
-    private List<IDraw> shapes = new List<IDraw>();
-    private ShapeCreate shapeFactory = new ShapeCreate();
+    private List<IDraw> shapes = new List<IDraw>(); // все фигуры на холсте
+    private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
 
 
     public MainWindow()
