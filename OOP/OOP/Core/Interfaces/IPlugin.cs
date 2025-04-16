@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP.Interfaces
+namespace OOP.Core.Interfaces
 {
-    interface ICommand
+    interface IPlugin
     {
     }
 }

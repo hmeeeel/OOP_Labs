@@ -112,7 +112,7 @@
                         <ToolTip>Отменить последнее действие</ToolTip>
                     </Button.ToolTip>
                 </Button>
-                <Button x:Name="btnRedo" Content="Повтор" Margin="5" Padding="10,5" Click="btnRedo_Click">
+                <Button x:Name="btnRedo" Content="Восстановить" Margin="5" Padding="10,5" Click="btnRedo_Click">
                     <Button.ToolTip>
                         <ToolTip>Повторить отмененное действие</ToolTip>
                     </Button.ToolTip>
@@ -132,7 +132,10 @@
         </Border>
 
         <Border Grid.Row="3" BorderBrush="#CCCCCC" BorderThickness="1" Margin="10">
-            <Canvas x:Name="canvas" Background="White"/>
+            <Canvas x:Name="canvas" Background="White"
+                    MouseDown="Canvas_MouseDown"
+                    MouseMove="Canvas_MouseMove"
+                    MouseUp="Canvas_MouseUp"/>
         </Border>
     </Grid>
 </Window>

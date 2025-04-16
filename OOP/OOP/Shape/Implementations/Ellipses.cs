@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -13,24 +8,25 @@ namespace OOP.Shape.Implementations
      public class Ellipses : RectangleBase
     {
         public Ellipses(Brush color, int penWidth, Point start, double width, double height, Brush fill)
-                        : base(color, penWidth, start, width, height, fill)
-        {}
-
-        public override void Draw(Canvas canvas)
+            : base(color, penWidth, start, width, height, fill)
         {
-            Ellipse ellipse = new Ellipse
+        }
+
+        protected override void InitializeShape()
+        {
+            var ellipse = new Ellipse
             {
-                Width = Width,
-                Height = Height,
                 Stroke = PenColor,
                 StrokeThickness = PenWidth,
-                Fill = Fill
+                Fill = Fill,
+                Width = Width,
+                Height = Height
             };
 
             Canvas.SetLeft(ellipse, PositionStart.X);
             Canvas.SetTop(ellipse, PositionStart.Y);
 
-            canvas.Children.Add(ellipse);
+            shapeElement = ellipse;
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OOP.AbstractClasses
+namespace OOP.Services.SerAndDeser
 {
-    class CommandBase
+    class ShapeDeserializer
     {
     }
 }

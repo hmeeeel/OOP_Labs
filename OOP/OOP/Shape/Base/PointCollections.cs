@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows;
 using System.Windows.Controls;
-using OOP.AbstractClasses;
+using OOP.Core.AbstractClasses;
 namespace OOP.Shape.Base
 {
     public abstract class PointCollections : ShapeBase

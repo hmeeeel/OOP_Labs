@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Windows.Shapes;
+﻿using System.Windows.Media;
 using System.Windows;
-using OOP.Interfaces;
 using OOP.Shape.Implementations;
+using OOP.Core.Interfaces;
 
 namespace OOP.Shape
 {
@@ -31,13 +25,28 @@ namespace OOP.Shape
         { 
             return new Polylines(color, penWidth, points);
         }
-        public IDraw CreatePolygon(Brush color, int penWidth, List<Point> points)
-        {
-            return new Polygons(color, penWidth, points); 
-        }
         public IDraw CreatePolygon(Brush color, int penWidth, List<Point> points, Brush fill)
         {
             return new Polygons(color, penWidth, points, fill);
+        }
+        // придумать че-то другое 
+        public IDraw CreateShape(string shapeType, Brush color, int penWidth, Point start, Brush fill)
+        {
+            switch (shapeType)
+            {
+                case "Rectangle":
+                    return CreateRectangle(color, penWidth, start, 0, 0, fill);
+                case "Ellipse":
+                    return CreateEllipse(color, penWidth, start, 0, 0, fill);
+                case "Line":
+                    return CreateLine(color, penWidth, start, start);
+                case "Polyline":
+                    return CreatePolyline(color, penWidth, new List<Point> { start });
+                case "Polygon":
+                    return CreatePolygon(color, penWidth, new List<Point> { start }, fill);
+                default:
+                    return null;
+            }
         }
     }
 }
