@@ -18,7 +18,8 @@ public partial class MainWindow : Window
 
     private List<IDraw> shapes = new List<IDraw>(); // все фигуры на холсте
     private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
-    private UndoOrRedo commandManager = new UndoOrRedo();
+                                                          //  private UndoOrRedo commandManager = new UndoOrRedo();
+    private UndoOrRedoList commandManager = new UndoOrRedoList();
 
     private IDraw currentShape;
     private string currentShapeType = "";
@@ -29,13 +30,12 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    // ---------------------- МЫШЬ -------------------------------------------------
     // нажатие
     private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
     {
         if (string.IsNullOrEmpty(currentShapeType)) return;
 
-        Point point = e.GetPosition(canvas); 
+        Point point = e.GetPosition(canvas);
         if (isDrawingPolylineOrPolygon)
         {
             // Если двойной клик и рисуем полилинию или многоугольник, завершаем их
@@ -80,15 +80,11 @@ public partial class MainWindow : Window
 
         if (currentShape != null)
         {
-            //shapes.Add(currentShape);
-            //currentShape.StartDraw(point);
-            //RedrawCanvas();
-
-            currentShape.StartDraw(point); 
+            currentShape.StartDraw(point);
             var command = new AddShape(canvas, currentShape, shapes);// + _undoStack
             commandManager.ExecuteCommand(command);// очистка _redoStack! 
 
-            if (currentShapeType == "Polyline" || currentShapeType == "Polygon")  isDrawingPolylineOrPolygon = true;
+            if (currentShapeType == "Polyline" || currentShapeType == "Polygon") isDrawingPolylineOrPolygon = true;
         }
     }
 
@@ -98,7 +94,7 @@ public partial class MainWindow : Window
         if (isDrawing && currentShape != null)
         {
             Point point = e.GetPosition(canvas);
-            currentShape.UpdateDraw(point); 
+            currentShape.UpdateDraw(point);
             RedrawCanvas();
         }
     }
@@ -118,8 +114,10 @@ public partial class MainWindow : Window
         isDrawing = false;
         isDrawingPolylineOrPolygon = false;
         currentShape = null;
-    }  
-    
+    }
+
+
+
     private void btnDrawLine_Click(object sender, RoutedEventArgs e)
     {
         //var line = shapeFactory.CreateLine(
@@ -234,6 +232,8 @@ public partial class MainWindow : Window
         }
     }
 
+
+
     private Brush GetSelectedPenColor()
     {
         var selectedItem = cmbPenColor.SelectedItem as ComboBoxItem;
@@ -268,17 +268,20 @@ public partial class MainWindow : Window
         }
     }
 
+
+
     private void btnUndo_Click(object sender, RoutedEventArgs e)
     {
         commandManager.Undo();
-       // RedrawCanvas();
     }
 
     private void btnRedo_Click(object sender, RoutedEventArgs e)
     {
         commandManager.Redo();
-      //  RedrawCanvas();
     }
+
+
+
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {

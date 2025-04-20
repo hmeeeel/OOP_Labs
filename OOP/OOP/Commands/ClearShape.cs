@@ -21,6 +21,7 @@ namespace OOP.Commands
             this.savedShapes = new List<IDraw>(shapes);
         }
 
+        // Сохраняет состояние и очищает холст
         public void Execute()
         {
             savedShapes = new List<IDraw>(shapes);
@@ -28,6 +29,7 @@ namespace OOP.Commands
             canvas.Children.Clear();
         }
 
+        //Восстановление
         public void Undo()
         {
             shapes.Clear();
