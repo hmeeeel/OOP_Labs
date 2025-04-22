@@ -7,7 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using static OOP.Core.Constants.Constants;
-
+using static OOP.Shape.ShapeCreateNew;
 namespace OOP;
 
 /// <summary>
@@ -17,8 +17,11 @@ public partial class MainWindow : Window
 {
 
     private List<IDraw> shapes = new List<IDraw>(); // все фигуры на холсте
-    private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
-                                                          //  private UndoOrRedo commandManager = new UndoOrRedo();
+   // private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
+
+    private ShapeCreateNew shapeFactory = new ShapeCreateNew();
+
+    //  private UndoOrRedo commandManager = new UndoOrRedo();
     private UndoOrRedoList commandManager = new UndoOrRedoList();
 
     private IDraw currentShape;
@@ -41,13 +44,13 @@ public partial class MainWindow : Window
             // Если двойной клик и рисуем полилинию или многоугольник, завершаем их
             if (e.ClickCount == DOUBLE_CLICK_COUNT)
             {
-                if (currentShapeType == "Polyline")
+                if (currentShapeType == "Polylines")
                 {
                     isDrawingPolylineOrPolygon = false;
                     isDrawing = false;
                     currentShape = null;
                 }
-                else if (currentShapeType == "Polygon")
+                else if (currentShapeType == "Polygons")
                 {
                     //замык!
                     (currentShape as Polygons)?.ClosePolygon();
@@ -59,11 +62,11 @@ public partial class MainWindow : Window
             else if (currentShape != null)
             {
                 // Продолжаем рисование многоточечных фигур
-                if (currentShapeType == "Polyline")
+                if (currentShapeType == "Polylines")
                 {
                     (currentShape as Polylines)?.ContinueDrawing(point);
                 }
-                else if (currentShapeType == "Polygon")
+                else if (currentShapeType == "Polygons")
                 {
                     (currentShape as Polygons)?.ContinueDrawing(point);
                 }
@@ -72,7 +75,10 @@ public partial class MainWindow : Window
         }
 
         isDrawing = true;
-        currentShape = shapeFactory.CreateShape(currentShapeType,
+
+        //shapeFactory
+        // статичсекие метода - через имя класса!
+        currentShape = ShapeCreateNew.CreateShape(currentShapeType,
             GetSelectedPenColor(),
             GetSelectedPenWidth(),
             point,
@@ -84,7 +90,7 @@ public partial class MainWindow : Window
             var command = new AddShape(canvas, currentShape, shapes);// + _undoStack
             commandManager.ExecuteCommand(command);// очистка _redoStack! 
 
-            if (currentShapeType == "Polyline" || currentShapeType == "Polygon") isDrawingPolylineOrPolygon = true;
+            if (currentShapeType == "Polylines" || currentShapeType == "Polygons") isDrawingPolylineOrPolygon = true;
         }
     }
 
@@ -120,97 +126,30 @@ public partial class MainWindow : Window
 
     private void btnDrawLine_Click(object sender, RoutedEventArgs e)
     {
-        //var line = shapeFactory.CreateLine(
-        //    GetSelectedPenColor(),
-        //    GetSelectedPenWidth(),
-        //    new Point(25, 20),
-        //    new Point(25, 100));
-
-        //shapes.Add(line);
-        //RedrawCanvas();
-
-        currentShapeType = "Line";
+        currentShapeType = "Lines";
         ResetDrawingModes();
     }
 
     private void btnDrawRectangle_Click(object sender, RoutedEventArgs e)
     {
-        //var rectangle = shapeFactory.CreateRectangle(
-        //    GetSelectedPenColor(),
-        //    GetSelectedPenWidth(),
-        //    new Point(63, 20),
-        //    98,
-        //    80,
-        //    GetSelectedFillColor());
-
-        //shapes.Add(rectangle);
-        //RedrawCanvas();
-
-        currentShapeType = "Rectangle";
+        currentShapeType = "Rectangles";
         ResetDrawingModes();
     }
 
     private void btnDrawEllipse_Click(object sender, RoutedEventArgs e)
     {
-        //var ellipse = shapeFactory.CreateEllipse(
-        //    GetSelectedPenColor(),
-        //    GetSelectedPenWidth(),
-        //    new Point(150, 100),
-        //    100,
-        //    150,
-        //    GetSelectedFillColor());
-
-        //shapes.Add(ellipse);
-        //RedrawCanvas();
-
-        currentShapeType = "Ellipse";
+        currentShapeType = "Ellipses";
         ResetDrawingModes();
     }
 
     private void btnDrawPolyline_Click(object sender, RoutedEventArgs e)
     {
-        //var points = new List<Point>
-        //    {
-        //        new Point(250, 20),
-        //        new Point(240, 40),
-        //        new Point(270, 70),
-        //        new Point(250, 90),
-        //        new Point(290, 120),
-        //        new Point(290, 30)
-        //    };
-
-        //var polyline = shapeFactory.CreatePolyline(
-        //    GetSelectedPenColor(),
-        //    GetSelectedPenWidth(),
-        //    points
-        //    );
-
-        //shapes.Add(polyline);
-        //RedrawCanvas();
-
-        currentShapeType = "Polyline";
+        currentShapeType = "Polylines";
         ResetDrawingModes();
     }
     private void btnDrawPolygon_Click(object sender, RoutedEventArgs e)
     {
-        //var points = new List<Point>
-        //    {
-        //        new Point(310, 20),
-        //        new Point(350, 100),
-        //        new Point(400, 250),
-        //        new Point(350, 250)
-        //    };
-
-        //var polygon = shapeFactory.CreatePolygon(
-        //GetSelectedPenColor(),
-        //GetSelectedPenWidth(),
-        //points,
-        //GetSelectedFillColor());
-
-        //shapes.Add(polygon);
-        //RedrawCanvas();
-
-        currentShapeType = "Polygon";
+        currentShapeType = "Polygons";
         ResetDrawingModes();
     }
 
@@ -293,5 +232,31 @@ public partial class MainWindow : Window
 
     private void btnAddPlugin_Click(object sender, RoutedEventArgs e)
     {
+        AddShapeButtons();
+    }
+
+
+    // проверка кнопки для всех фигур
+    private void AddShapeButtons()
+    {
+        List<string> availableShapes = ShapeCreateNew.GetAvailableShapes();
+        foreach (string shapeName in availableShapes)
+        {
+            Button btn = new Button
+            {
+                Content = shapeName,
+                Margin = new Thickness(5),
+                Padding = new Thickness(5),
+                MinWidth = 80
+            };
+
+            btn.Click += (sender, e) =>
+            {
+                currentShapeType = shapeName;
+                ResetDrawingModes();
+            };
+
+            shapeButtonsPanel.Children.Add(btn);
+        }
     }
 }
