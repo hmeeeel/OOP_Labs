@@ -3,7 +3,7 @@ using System.Windows;
 using OOP.Shape.Implementations;
 using OOP.Core.Interfaces;
 
-namespace OOP.Shape
+namespace OOP.Shape.Factory
 {
     public class ShapeCreate
     {

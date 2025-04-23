@@ -1,9 +1,8 @@
-﻿using OOP.Core.AbstractClasses;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-namespace OOP.Shape.Base
+namespace OOP.Core.AbstractClasses
 {
    public abstract class RectangleBase : ShapeBase
     {

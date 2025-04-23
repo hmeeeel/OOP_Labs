@@ -4,11 +4,12 @@ using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
-using OOP.Shape.Base;
+using static OOP.Core.Constants.Constants;
+using OOP.Core.AbstractClasses;
 
 namespace OOP.Shape.Implementations
 {
-    public class Polylines : PointCollections
+    public class Polylines : PolyBase
     {
         private Polyline polyline;
 
@@ -23,23 +24,6 @@ namespace OOP.Shape.Implementations
             UpdatePoints();
         }
 
-        private void UpdatePoints()
-        {
-            polyline.Points = CreatePointCollection();
-        }
-
-        public override void Draw(Canvas canvas)
-        {
-            if (!canvas.Children.Contains(polyline)) canvas.Children.Add(polyline);
-        }
-
-        public override void StartDraw(Point startPoint)
-        {
-            base.StartDraw(startPoint);
-            Points = new List<Point> { startPoint };
-            UpdatePoints();
-        }
-
         // как карандаш в PAINT - доб каждую новую точку во время движения мыши
         //public override void UpdateDraw(Point newPoint)
         //{
@@ -51,23 +35,16 @@ namespace OOP.Shape.Implementations
         //    }
         //}
 
-        public override void UpdateDraw(Point newPoint)
+        protected override void UpdatePoints()
         {
-            if (!IsDrawing) return;
-
-            if (Points.Count > 0)
-            {
-                // не добавляем новую точку, а просто обновляем посл
-                if (Points.Count > 1) Points[Points.Count - 1] = newPoint;
-                else Points.Add(newPoint);
-
-                UpdatePoints();
-            }
+            polyline.Points = CreatePointCollection();
         }
-        public void ContinueDrawing(Point newPoint)
+        public override void Draw(Canvas canvas)
         {
-            Points.Add(newPoint);
-            UpdatePoints();
+            if (!canvas.Children.Contains(polyline)) canvas.Children.Add(polyline);
+        }
+        protected override void FinishShape()
+        {
         }
     }
 }

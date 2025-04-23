@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-using OOP.Shape.Base;
+using OOP.Core.AbstractClasses;
 namespace OOP.Shape.Implementations
 {
      public class Ellipses : RectangleBase

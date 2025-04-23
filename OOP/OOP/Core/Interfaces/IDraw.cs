@@ -14,6 +14,7 @@ namespace OOP.Core.Interfaces
         void UpdateDraw(Point newPoint);
         void StartDraw(Point startPoint);
         void EndDraw();
-
+        bool HandleMouseDown(Point point, int clickN);
+        bool IsOneClick();
     }
 }

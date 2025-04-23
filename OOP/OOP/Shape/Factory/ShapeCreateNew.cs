@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows;
 
-namespace OOP.Shape
+namespace OOP.Shape.Factory
 {
     public class ShapeCreateNew
     {
@@ -48,7 +48,7 @@ namespace OOP.Shape
                 // фигня!!
                 switch (shapeName)
                 {
-                    case "Line":
+                    case "Lines":
                         return (IDraw)constructor.Invoke(new object[] { penColor, penWidth, startPoint, startPoint });
                     case "Rectangles":
                     case "Ellipses":

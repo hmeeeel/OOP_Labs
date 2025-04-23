@@ -1,13 +1,16 @@
 ﻿using OOP.Commands;
 using OOP.Core.Interfaces;
-using OOP.Shape;
+using OOP.Shape.Factory;
 using OOP.Shape.Implementations;
+using OOP.UI;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using static OOP.Core.Constants.Constants;
-using static OOP.Shape.ShapeCreateNew;
+using static OOP.Shape.Factory.ShapeCreateNew;
+using static OOP.UI.UIManager;
+
 namespace OOP;
 
 /// <summary>
@@ -18,19 +21,31 @@ public partial class MainWindow : Window
 
     private List<IDraw> shapes = new List<IDraw>(); // все фигуры на холсте
    // private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
-
     private ShapeCreateNew shapeFactory = new ShapeCreateNew();
-
     //  private UndoOrRedo commandManager = new UndoOrRedo();
     private UndoOrRedoList commandManager = new UndoOrRedoList();
+    private UIManager uiManager;
 
     private IDraw currentShape;
     private string currentShapeType = "";
     private bool isDrawing = false;
-    private bool isDrawingPolylineOrPolygon = false;
+    private bool isDrawingPoly = false;
     public MainWindow()
     {
         InitializeComponent();
+
+        uiManager = new UIManager(
+                canvas,
+                shapes,
+                shapeButtonsPanel,
+                commandManager,
+                SetShapeType, // ссылка на метод MainWindow
+                ResetDrawingModes // /-/
+            );
+    }
+    private void SetShapeType(string shapeType)
+    {
+        currentShapeType = shapeType;
     }
 
     // нажатие
@@ -39,37 +54,13 @@ public partial class MainWindow : Window
         if (string.IsNullOrEmpty(currentShapeType)) return;
 
         Point point = e.GetPosition(canvas);
-        if (isDrawingPolylineOrPolygon)
+        if (isDrawing && currentShape != null)
         {
-            // Если двойной клик и рисуем полилинию или многоугольник, завершаем их
-            if (e.ClickCount == DOUBLE_CLICK_COUNT)
+            isDrawing = currentShape.HandleMouseDown(point, e.ClickCount);
+            if (!isDrawing)
             {
-                if (currentShapeType == "Polylines")
-                {
-                    isDrawingPolylineOrPolygon = false;
-                    isDrawing = false;
-                    currentShape = null;
-                }
-                else if (currentShapeType == "Polygons")
-                {
-                    //замык!
-                    (currentShape as Polygons)?.ClosePolygon();
-                    isDrawingPolylineOrPolygon = false;
-                    isDrawing = false;
-                    currentShape = null;
-                }
-            }
-            else if (currentShape != null)
-            {
-                // Продолжаем рисование многоточечных фигур
-                if (currentShapeType == "Polylines")
-                {
-                    (currentShape as Polylines)?.ContinueDrawing(point);
-                }
-                else if (currentShapeType == "Polygons")
-                {
-                    (currentShape as Polygons)?.ContinueDrawing(point);
-                }
+                isDrawingPoly = false;
+                currentShape = null;
             }
             return;
         }
@@ -79,18 +70,19 @@ public partial class MainWindow : Window
         //shapeFactory
         // статичсекие метода - через имя класса!
         currentShape = ShapeCreateNew.CreateShape(currentShapeType,
-            GetSelectedPenColor(),
-            GetSelectedPenWidth(),
-            point,
-            GetSelectedFillColor());
+                UIManager.GetSelectedPenColor(cmbPenColor),
+                UIManager.GetSelectedPenWidth(cmbPenWidth),
+                point,
+                UIManager.GetSelectedFillColor(cmbFillColor));
 
         if (currentShape != null)
         {
+            isDrawing = true;
+            isDrawingPoly = currentShape.IsOneClick();
+
             currentShape.StartDraw(point);
             var command = new AddShape(canvas, currentShape, shapes);// + _undoStack
             commandManager.ExecuteCommand(command);// очистка _redoStack! 
-
-            if (currentShapeType == "Polylines" || currentShapeType == "Polygons") isDrawingPolylineOrPolygon = true;
         }
     }
 
@@ -101,14 +93,14 @@ public partial class MainWindow : Window
         {
             Point point = e.GetPosition(canvas);
             currentShape.UpdateDraw(point);
-            RedrawCanvas();
+            uiManager.RedrawCanvas();
         }
     }
 
     // отпускание
     private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
     {
-        if (isDrawing && currentShape != null && !isDrawingPolylineOrPolygon)
+        if (isDrawing && currentShape != null && !isDrawingPoly)
         {
             Point point = e.GetPosition(canvas);
             currentShape.EndDraw();
@@ -118,11 +110,9 @@ public partial class MainWindow : Window
     private void ResetDrawingModes()
     {
         isDrawing = false;
-        isDrawingPolylineOrPolygon = false;
+        isDrawingPoly = false;
         currentShape = null;
     }
-
-
 
     private void btnDrawLine_Click(object sender, RoutedEventArgs e)
     {
@@ -152,7 +142,6 @@ public partial class MainWindow : Window
         currentShapeType = "Polygons";
         ResetDrawingModes();
     }
-
     private void btnClear_Click(object sender, RoutedEventArgs e)
     {
         //shapes.Clear();
@@ -161,54 +150,6 @@ public partial class MainWindow : Window
         var command = new ClearShape(canvas, shapes);
         commandManager.ExecuteCommand(command);
     }
-
-    private void RedrawCanvas()
-    {
-        canvas.Children.Clear();
-        foreach (var shape in shapes)
-        {
-            shape.Draw(canvas);
-        }
-    }
-
-
-
-    private Brush GetSelectedPenColor()
-    {
-        var selectedItem = cmbPenColor.SelectedItem as ComboBoxItem;
-        string colorName = selectedItem.Tag.ToString();
-        return GetBrushFromName(colorName);
-    }
-
-    private Brush GetSelectedFillColor()
-    {
-        var selectedItem = cmbFillColor.SelectedItem as ComboBoxItem;
-        string colorName = selectedItem.Tag.ToString();
-        return GetBrushFromName(colorName);
-    }
-
-    private int GetSelectedPenWidth()
-    {
-        var selectedItem = cmbPenWidth.SelectedItem as ComboBoxItem;
-        return int.Parse(selectedItem.Content.ToString());
-    }
-
-    private Brush GetBrushFromName(string colorName)
-    {
-        switch (colorName)
-        {
-            case "Black": return Brushes.Black;
-            case "Red": return Brushes.Red;
-            case "Blue": return Brushes.Blue;
-            case "Green": return Brushes.Green;
-            case "Purple": return Brushes.Purple;
-            case "Transparent": return Brushes.Transparent;
-            default: return Brushes.Black;
-        }
-    }
-
-
-
     private void btnUndo_Click(object sender, RoutedEventArgs e)
     {
         commandManager.Undo();
@@ -218,9 +159,6 @@ public partial class MainWindow : Window
     {
         commandManager.Redo();
     }
-
-
-
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
@@ -232,31 +170,6 @@ public partial class MainWindow : Window
 
     private void btnAddPlugin_Click(object sender, RoutedEventArgs e)
     {
-        AddShapeButtons();
-    }
-
-
-    // проверка кнопки для всех фигур
-    private void AddShapeButtons()
-    {
-        List<string> availableShapes = ShapeCreateNew.GetAvailableShapes();
-        foreach (string shapeName in availableShapes)
-        {
-            Button btn = new Button
-            {
-                Content = shapeName,
-                Margin = new Thickness(5),
-                Padding = new Thickness(5),
-                MinWidth = 80
-            };
-
-            btn.Click += (sender, e) =>
-            {
-                currentShapeType = shapeName;
-                ResetDrawingModes();
-            };
-
-            shapeButtonsPanel.Children.Add(btn);
-        }
+        uiManager.AddShapeButtons();
     }
 }

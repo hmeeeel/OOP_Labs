@@ -2,11 +2,11 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
-using OOP.Shape.Base;
 using static OOP.Core.Constants.Constants;
+using OOP.Core.AbstractClasses;
 namespace OOP.Shape.Implementations
 {
-    public class Polygons : PointCollections
+    public class Polygons : PolyBase
     {
         private Polygon polygon;
 
@@ -26,7 +26,7 @@ namespace OOP.Shape.Implementations
             : this(color, penWidth, points, Brushes.Transparent)
         {}
 
-        private void UpdatePoints()
+        protected override void UpdatePoints()
         {
             polygon.Points = CreatePointCollection();
         }
@@ -37,35 +37,6 @@ namespace OOP.Shape.Implementations
                 canvas.Children.Add(polygon);
         }
 
-        public override void StartDraw(Point startPoint)
-        {
-            base.StartDraw(startPoint);
-            Points = new List<Point> { startPoint };
-            UpdatePoints();
-        }
-
-        //перетаскиваю посл точку
-        public override void UpdateDraw(Point newPoint)
-        {
-            if (!IsDrawing) return;
-
-            if (Points.Count > 0)
-            {
-                // не добавляем новую точку, а просто обновляем посл
-                if (Points.Count > 1)  Points[Points.Count - 1] = newPoint;
-                else Points.Add(newPoint);
-
-                UpdatePoints();
-            }
-        }
-
-        public void ContinueDrawing(Point newPoint)
-        {
-            Points.Add(newPoint);
-            UpdatePoints();
-        }
-
-
         //  замыкание 
         public void ClosePolygon()
         {
@@ -74,6 +45,11 @@ namespace OOP.Shape.Implementations
                 Points.Add(Points[0]); // 1ая в конец
                 UpdatePoints();
             }
+        }
+
+        protected override void FinishShape()
+        {
+            ClosePolygon();
         }
     }
 }
