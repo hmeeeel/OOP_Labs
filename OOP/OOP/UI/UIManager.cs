@@ -24,8 +24,10 @@ namespace OOP.UI
         private UndoOrRedoList commandManager;
         private Action<string> setShapeTypeCallback;
         private Action resetDrawingModesCallback;
+        private Button btnUndo;
+        private Button btnRedo;
 
-        public UIManager(Canvas canvas, List<IDraw> shapes, StackPanel shapeButtonsPanel, UndoOrRedoList commandManager, Action<string> setShapeType, Action resetDrawingModes)
+        public UIManager(Canvas canvas, List<IDraw> shapes, StackPanel shapeButtonsPanel, UndoOrRedoList commandManager, Action<string> setShapeType, Action resetDrawingModes, Button btnUndo, Button btnRedo)
         {
             this.canvas = canvas;
             this.shapes = shapes;
@@ -33,6 +35,10 @@ namespace OOP.UI
             this.commandManager = commandManager;
             this.setShapeTypeCallback = setShapeType;
             this.resetDrawingModesCallback = resetDrawingModes;
+            this.btnUndo = btnUndo;
+            this.btnRedo = btnRedo;
+
+            UpdateUndoRedoButton();
         }
 
         public static Brush GetSelectedPenColor(ComboBox cmbPenColor)
@@ -57,16 +63,9 @@ namespace OOP.UI
 
         public static Brush GetBrushFromName(string colorName)
         {
-            switch (colorName)
-            {
-                case "Black": return Brushes.Black;
-                case "Red": return Brushes.Red;
-                case "Blue": return Brushes.Blue;
-                case "Green": return Brushes.Green;
-                case "Purple": return Brushes.Purple;
-                case "Transparent": return Brushes.Transparent;
-                default: return Brushes.Black;
-            }
+            var converter = new System.Windows.Media.BrushConverter();
+            if (converter.CanConvertFrom(typeof(string))) return (Brush)converter.ConvertFromString(colorName);
+            else return Brushes.Black;
         }
 
         public void AddShapeButtons()
@@ -85,7 +84,7 @@ namespace OOP.UI
                 btn.Click += (sender, e) =>
                 {
                     setShapeTypeCallback(shapeName); 
-                    resetDrawingModesCallback(); 
+                    resetDrawingModesCallback();
                 };
 
                 shapeButtonsPanel.Children.Add(btn);
@@ -99,6 +98,12 @@ namespace OOP.UI
             {
                 shape.Draw(canvas);
             }
+        }
+
+        public void UpdateUndoRedoButton()
+        {
+            btnUndo.IsEnabled = commandManager.CanUndo();
+            btnRedo.IsEnabled = commandManager.CanRedo();
         }
     }
 }

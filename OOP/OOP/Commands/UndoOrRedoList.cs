@@ -48,5 +48,14 @@ namespace OOP.Commands
             }
             return false;
         }
+        public bool CanUndo()
+        {
+            return currentIndex >= 0;
+        }
+
+        public bool CanRedo()
+        {
+            return currentIndex < commandHistory.Count - 1;
+        }
     }
 }

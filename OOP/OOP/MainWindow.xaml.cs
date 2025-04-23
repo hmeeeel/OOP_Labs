@@ -35,13 +35,15 @@ public partial class MainWindow : Window
         InitializeComponent();
 
         uiManager = new UIManager(
-                canvas,
-                shapes,
-                shapeButtonsPanel,
-                commandManager,
-                SetShapeType, // ссылка на метод MainWindow
-                ResetDrawingModes // /-/
-            );
+               canvas,
+               shapes,
+               shapeButtonsPanel,
+               commandManager,
+               SetShapeType,
+               ResetDrawingModes, 
+               btnUndo,       
+               btnRedo       
+           );
     }
     private void SetShapeType(string shapeType)
     {
@@ -83,6 +85,7 @@ public partial class MainWindow : Window
             currentShape.StartDraw(point);
             var command = new AddShape(canvas, currentShape, shapes);// + _undoStack
             commandManager.ExecuteCommand(command);// очистка _redoStack! 
+            uiManager.UpdateUndoRedoButton();
         }
     }
 
@@ -149,15 +152,18 @@ public partial class MainWindow : Window
 
         var command = new ClearShape(canvas, shapes);
         commandManager.ExecuteCommand(command);
+        uiManager.UpdateUndoRedoButton();
     }
     private void btnUndo_Click(object sender, RoutedEventArgs e)
     {
         commandManager.Undo();
+        uiManager.UpdateUndoRedoButton();
     }
 
     private void btnRedo_Click(object sender, RoutedEventArgs e)
     {
         commandManager.Redo();
+        uiManager.UpdateUndoRedoButton();
     }
 
     private void btnSave_Click(object sender, RoutedEventArgs e)
