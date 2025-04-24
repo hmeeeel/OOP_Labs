@@ -39,6 +39,15 @@ namespace OOP.Commands
                 undoStack.Push(command);
             }
         }
+        public bool CanUndo()
+        {
+            return undoStack.Count > 0;
+        }
+
+        public bool CanRedo()
+        {
+            return redoStack.Count > 0;
+        }
     }
 }
 

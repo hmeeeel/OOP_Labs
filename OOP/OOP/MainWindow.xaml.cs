@@ -20,16 +20,13 @@ public partial class MainWindow : Window
 {
 
     private List<IDraw> shapes = new List<IDraw>(); // все фигуры на холсте
-   // private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
+    // private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
     private ShapeCreateNew shapeFactory = new ShapeCreateNew();
-    //  private UndoOrRedo commandManager = new UndoOrRedo();
-    private UndoOrRedoList commandManager = new UndoOrRedoList();
+    private UndoOrRedo commandManager = new UndoOrRedo();
+    //private UndoOrRedoList commandManager = new UndoOrRedoList();
     private UIManager uiManager;
+    private MouseHandler mouseHandler;
 
-    private IDraw currentShape;
-    private string currentShapeType = "";
-    private bool isDrawing = false;
-    private bool isDrawingPoly = false;
     public MainWindow()
     {
         InitializeComponent();
@@ -42,107 +39,70 @@ public partial class MainWindow : Window
                SetShapeType,
                ResetDrawingModes, 
                btnUndo,       
-               btnRedo       
+               btnRedo
            );
+
+        mouseHandler = new MouseHandler(
+           canvas,
+           shapes,
+           shapeFactory,
+           commandManager,
+           uiManager,
+           cmbPenColor,
+           cmbPenWidth,
+           cmbFillColor
+       );
     }
     private void SetShapeType(string shapeType)
     {
-        currentShapeType = shapeType;
+        mouseHandler.SetShapeType(shapeType);
     }
 
-    // нажатие
     private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
     {
-        if (string.IsNullOrEmpty(currentShapeType)) return;
-
-        Point point = e.GetPosition(canvas);
-        if (isDrawing && currentShape != null)
-        {
-            isDrawing = currentShape.HandleMouseDown(point, e.ClickCount);
-            if (!isDrawing)
-            {
-                isDrawingPoly = false;
-                currentShape = null;
-            }
-            return;
-        }
-
-        isDrawing = true;
-
-        //shapeFactory
-        // статичсекие метода - через имя класса!
-        currentShape = ShapeCreateNew.CreateShape(currentShapeType,
-                UIManager.GetSelectedPenColor(cmbPenColor),
-                UIManager.GetSelectedPenWidth(cmbPenWidth),
-                point,
-                UIManager.GetSelectedFillColor(cmbFillColor));
-
-        if (currentShape != null)
-        {
-            isDrawing = true;
-            isDrawingPoly = currentShape.IsOneClick();
-
-            currentShape.StartDraw(point);
-            var command = new AddShape(canvas, currentShape, shapes);// + _undoStack
-            commandManager.ExecuteCommand(command);// очистка _redoStack! 
-            uiManager.UpdateUndoRedoButton();
-        }
+        mouseHandler.MouseDown(sender, e);
     }
 
-    // движение
     private void Canvas_MouseMove(object sender, MouseEventArgs e)
     {
-        if (isDrawing && currentShape != null)
-        {
-            Point point = e.GetPosition(canvas);
-            currentShape.UpdateDraw(point);
-            uiManager.RedrawCanvas();
-        }
+        mouseHandler.MouseMove(sender, e);
     }
 
-    // отпускание
     private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
     {
-        if (isDrawing && currentShape != null && !isDrawingPoly)
-        {
-            Point point = e.GetPosition(canvas);
-            currentShape.EndDraw();
-            isDrawing = false;
-        }
+        mouseHandler.MouseUp(sender, e);
     }
     private void ResetDrawingModes()
     {
-        isDrawing = false;
-        isDrawingPoly = false;
-        currentShape = null;
+        mouseHandler.ResetDrawingModes();
     }
 
     private void btnDrawLine_Click(object sender, RoutedEventArgs e)
     {
-        currentShapeType = "Lines";
+        mouseHandler.SetShapeType("Lines");
         ResetDrawingModes();
     }
 
     private void btnDrawRectangle_Click(object sender, RoutedEventArgs e)
     {
-        currentShapeType = "Rectangles";
+        mouseHandler.SetShapeType("Rectangles");
         ResetDrawingModes();
     }
 
     private void btnDrawEllipse_Click(object sender, RoutedEventArgs e)
     {
-        currentShapeType = "Ellipses";
+        mouseHandler.SetShapeType("Ellipses");
         ResetDrawingModes();
     }
 
     private void btnDrawPolyline_Click(object sender, RoutedEventArgs e)
     {
-        currentShapeType = "Polylines";
+        mouseHandler.SetShapeType("Polylines");
         ResetDrawingModes();
     }
     private void btnDrawPolygon_Click(object sender, RoutedEventArgs e)
     {
-        currentShapeType = "Polygons";
+        mouseHandler.SetShapeType("Polygons");
         ResetDrawingModes();
     }
     private void btnClear_Click(object sender, RoutedEventArgs e)
