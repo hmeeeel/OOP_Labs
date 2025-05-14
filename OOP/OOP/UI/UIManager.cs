@@ -73,7 +73,7 @@ namespace OOP.UI
 
             var converter = new System.Windows.Media.BrushConverter();
             if (converter.CanConvertFrom(typeof(string))) return (Brush)converter.ConvertFromString(colorName);
-            else return Brushes.Black;
+            return Brushes.Black;
         }
 
         public void AddShapeButtons()

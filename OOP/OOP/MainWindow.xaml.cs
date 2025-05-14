@@ -107,9 +107,6 @@ public partial class MainWindow : Window
     }
     private void btnClear_Click(object sender, RoutedEventArgs e)
     {
-        //shapes.Clear();
-        //RedrawCanvas();
-
         var command = new ClearShape(canvas, shapes);
         commandManager.ExecuteCommand(command);
         uiManager.UpdateUndoRedoButton();
