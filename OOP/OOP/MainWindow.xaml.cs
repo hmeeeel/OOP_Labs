@@ -1,5 +1,8 @@
-﻿using OOP.Commands;
+﻿using Microsoft.Win32;
+using OOP.Commands;
 using OOP.Core.Interfaces;
+using OOP.Services;
+using OOP.Services.SerAndDeser;
 using OOP.Shape.Factory;
 using OOP.Shape.Implementations;
 using OOP.UI;
@@ -8,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using static OOP.Core.Constants.Constants;
+
 using static OOP.Shape.Factory.ShapeCreateNew;
 using static OOP.UI.UIManager;
 
@@ -123,16 +127,53 @@ public partial class MainWindow : Window
         uiManager.UpdateUndoRedoButton();
     }
 
+
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
+        SaveFileDialog saveFileDialog = new SaveFileDialog
+        {
+            Filter = "JSON файлы (*.json)|*.json",
+            Title = "Сохранить фигуры",
+            DefaultExt = "json"
+        };
+
+        if (saveFileDialog.ShowDialog() == true)
+        {
+            var saveCommand = new SaveShape(canvas, shapes, saveFileDialog.FileName);
+            saveCommand.Execute();
+        }
     }
 
     private void btnLoad_Click(object sender, RoutedEventArgs e)
     {
+        OpenFileDialog openFileDialog = new OpenFileDialog
+        {
+            Filter = "JSON файлы (*.json)|*.json",
+            Title = "Загрузить фигуры"
+        };
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            List<IDraw> previousState = new List<IDraw>(shapes);
+
+            canvas.Children.Clear();
+            shapes.Clear();
+
+            List<IDraw> loadedShapes = ShapeDeserializer.LoadFromFile(openFileDialog.FileName, canvas);
+            canvas.Children.Clear(); 
+
+            foreach (var shape in loadedShapes)
+            {
+                var addCommand = new AddShape(canvas, shape, shapes);
+                commandManager.ExecuteCommand(addCommand);
+            }
+
+            uiManager.UpdateUndoRedoButton();
+        }
     }
 
     private void btnAddPlugin_Click(object sender, RoutedEventArgs e)
     {
-        uiManager.AddShapeButtons();
+
     }
 }

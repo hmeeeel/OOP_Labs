@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOP", "OOP\OOP.csproj", "{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrapezoidPlugin", "TrapezoidPlugin2\TrapezoidPlugin.csproj", "{BDE3D4B8-4A05-40A3-B574-99D93754DF14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDE3D4B8-4A05-40A3-B574-99D93754DF14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDE3D4B8-4A05-40A3-B574-99D93754DF14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDE3D4B8-4A05-40A3-B574-99D93754DF14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDE3D4B8-4A05-40A3-B574-99D93754DF14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
