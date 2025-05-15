@@ -11,6 +11,8 @@ using System.Windows.Shapes;
 using OOP.Commands;
 using System.Windows.Input;
 using OOP.Core.Interfaces;
+using OOP.Services.Plugin;
+using Microsoft.Win32;
 
 
 namespace OOP.UI
@@ -26,7 +28,7 @@ namespace OOP.UI
         private Action resetDrawingModesCallback;
         private Button btnUndo;
         private Button btnRedo;
-
+        private PluginLoader pluginLoader;
         public UIManager(Canvas canvas, List<IDraw> shapes, StackPanel shapeButtonsPanel, UndoOrRedo commandManager, Action<string> setShapeType, Action resetDrawingModes, Button btnUndo, Button btnRedo)
         {
             this.canvas = canvas;
@@ -38,6 +40,7 @@ namespace OOP.UI
             this.btnUndo = btnUndo;
             this.btnRedo = btnRedo;
 
+            this.pluginLoader = new PluginLoader();
             UpdateUndoRedoButton();
         }
 
@@ -91,7 +94,7 @@ namespace OOP.UI
 
                 btn.Click += (sender, e) =>
                 {
-                    setShapeTypeCallback(shapeName); 
+                    setShapeTypeCallback(shapeName);
                     resetDrawingModesCallback();
                 };
 
@@ -113,6 +116,50 @@ namespace OOP.UI
             btnUndo.IsEnabled = commandManager.CanUndo();
             btnRedo.IsEnabled = commandManager.CanRedo();
         }
+        public void LoadPlugin()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Plugin Files (*.dll)|*.dll|All files (*.*)|*.*",
+                Title = "Select a Plugin"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                string pluginPath = openFileDialog.FileName;
+                if (pluginLoader.LoadPlugin(pluginPath))
+                {
+                    foreach (var plugin in pluginLoader.LoadedPlugins)
+                    {
+                        ShapeCreateNew.RegisterPlugin(plugin.Value);
+                    }
+
+                    AddShapeButtons();
+                }
+            }
+        }
+        public void UpdateShapeButtons()
+        {
+            shapeButtonsPanel.Children.Clear();
+            List<string> availableShapes = ShapeCreateNew.GetAvailableShapes();
+            foreach (string shapeName in availableShapes)
+            {
+                Button btn = new Button
+                {
+                    Content = shapeName,
+                    Margin = new Thickness(5),
+                    Padding = new Thickness(5),
+                    MinWidth = 80
+                };
+
+                btn.Click += (sender, e) =>
+                {
+                    setShapeTypeCallback(shapeName);
+                    resetDrawingModesCallback();
+                };
+
+                shapeButtonsPanel.Children.Add(btn);
+            }
+        }
     }
 }
-

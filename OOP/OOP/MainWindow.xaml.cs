@@ -41,8 +41,8 @@ public partial class MainWindow : Window
                shapeButtonsPanel,
                commandManager,
                SetShapeType,
-               ResetDrawingModes, 
-               btnUndo,       
+               ResetDrawingModes,
+               btnUndo,
                btnRedo
            );
 
@@ -160,7 +160,7 @@ public partial class MainWindow : Window
             shapes.Clear();
 
             List<IDraw> loadedShapes = ShapeDeserializer.LoadFromFile(openFileDialog.FileName, canvas);
-            canvas.Children.Clear(); 
+            canvas.Children.Clear();
 
             foreach (var shape in loadedShapes)
             {
@@ -174,6 +174,7 @@ public partial class MainWindow : Window
 
     private void btnAddPlugin_Click(object sender, RoutedEventArgs e)
     {
-
+        //uiManager.AddShapeButtons();
+        uiManager.LoadPlugin();
     }
 }

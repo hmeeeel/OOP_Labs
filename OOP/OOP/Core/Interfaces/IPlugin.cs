@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace OOP.Core.Interfaces
 {
-    interface IPlugin
+    public interface IPlugin
     {
+        string Name { get; }
+        string Description { get; }
+        IDraw CreateShape();
+        Type ShapeType { get; }
     }
 }
