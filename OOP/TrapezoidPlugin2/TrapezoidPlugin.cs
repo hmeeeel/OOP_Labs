@@ -16,9 +16,9 @@ namespace TrapezoidPlugin
         public string Name => "Trapezoid";
         public string Description => "Плагин для создания трапеций";
         public Type ShapeType => typeof(Trapezoid);
-        public IDraw CreateShape()
+        public IDraw CreateShape(Brush penColor, int penWidth, Point startPoint, Brush fillColor)
         {
-            return new Trapezoid(Brushes.Black, 2, new Point(0, 0), 0, 0, 0, Brushes.Transparent);
+            return new Trapezoid(penColor, penWidth, startPoint, 0, 0, 0, fillColor);
         }
     }
 

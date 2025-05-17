@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 
 namespace OOP.Core.Interfaces
 {
@@ -12,6 +14,6 @@ namespace OOP.Core.Interfaces
         string Name { get; }
         string Description { get; }
         Type ShapeType { get; }
-        IDraw CreateShape();
+        IDraw CreateShape(Brush penColor, int penWidth, Point startPoint, Brush fillColor);
     }
 }
