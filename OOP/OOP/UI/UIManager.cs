@@ -13,6 +13,7 @@ using System.Windows.Input;
 using OOP.Core.Interfaces;
 using OOP.Services.Plugin;
 using Microsoft.Win32;
+using OOP.Services.SerAndDeser;
 
 
 namespace OOP.UI
@@ -82,11 +83,12 @@ namespace OOP.UI
         public void AddShapeButtons()
         {
             List<string> availableShapes = ShapeCreateNew.GetAvailableShapes();
-            foreach (string shapeName in availableShapes)
+            //foreach (string shapeName in availableShapes)
+            foreach (var plugin in pluginLoader.LoadedPlugins)
             {
                 Button btn = new Button
                 {
-                    Content = shapeName,
+                    Content = plugin.Value.Name,
                     Margin = new Thickness(5),
                     Padding = new Thickness(5),
                     MinWidth = 80
@@ -94,7 +96,7 @@ namespace OOP.UI
 
                 btn.Click += (sender, e) =>
                 {
-                    setShapeTypeCallback(shapeName);
+                    setShapeTypeCallback(plugin.Value.Name);
                     resetDrawingModesCallback();
                 };
 
@@ -138,27 +140,60 @@ namespace OOP.UI
                 }
             }
         }
-        public void UpdateShapeButtons()
+        public void SaveShapes()
         {
-            shapeButtonsPanel.Children.Clear();
-            List<string> availableShapes = ShapeCreateNew.GetAvailableShapes();
-            foreach (string shapeName in availableShapes)
+            try
             {
-                Button btn = new Button
+                SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
-                    Content = shapeName,
-                    Margin = new Thickness(5),
-                    Padding = new Thickness(5),
-                    MinWidth = 80
+                    Filter = "JSON файлы (*.json)|*.json",
+                    Title = "Сохранить фигуры",
+                    DefaultExt = "json"
                 };
 
-                btn.Click += (sender, e) =>
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    setShapeTypeCallback(shapeName);
-                    resetDrawingModesCallback();
+                    ShapeSerializer.SaveToFile(shapes, saveFileDialog.FileName);
+                    MessageBox.Show("Успех", "Сохранение", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при сохранении: {ex.Message}","Ошибка сохранения", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void LoadShapes()
+        {
+            try
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog
+                {
+                    Filter = "JSON файлы (*.json)|*.json",
+                    Title = "Загрузить фигуры"
                 };
 
-                shapeButtonsPanel.Children.Add(btn);
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    List<IDraw> previousState = new List<IDraw>(shapes);
+
+                    canvas.Children.Clear();
+                    shapes.Clear();
+
+                    List<IDraw> loadedShapes = ShapeDeserializer.LoadFromFile(openFileDialog.FileName, canvas);
+                    canvas.Children.Clear();
+                    foreach (var shape in loadedShapes)
+                    {
+                        var addCommand = new AddShape(canvas, shape, shapes);
+                        commandManager.ExecuteCommand(addCommand);
+                    }
+
+                    UpdateUndoRedoButton();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке фигур: {ex.Message}", "Ошибка загрузки", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

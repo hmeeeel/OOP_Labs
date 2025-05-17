@@ -17,14 +17,14 @@ namespace OOP.Shape.Factory
         private static Dictionary<string, IPlugin> pluginShapes;
         static ShapeCreateNew()
         {
-            shapeInfo = GetShapeInfo(); 
+            shapeInfo = GetShapeInfo();
             pluginShapes = new Dictionary<string, IPlugin>();
         }
 
         public static Dictionary<string, ConstructorInfo> GetShapeInfo()
         {
             var constructors = new Dictionary<string, ConstructorInfo>();
-            Assembly assembly = Assembly.GetExecutingAssembly(); //текущая сборка
+            Assembly assembly = Assembly.GetExecutingAssembly(); 
 
             foreach (var type in assembly.GetTypes())
             {
@@ -32,7 +32,7 @@ namespace OOP.Shape.Factory
                 {
                     string shapeName = type.Name;
 
-                    ConstructorInfo constructor = type.GetConstructors().FirstOrDefault(); //получается первый конструктор класса
+                    ConstructorInfo constructor = type.GetConstructors().FirstOrDefault(); 
                     if (constructor != null)
                     {
                         constructors[shapeName] = constructor;
@@ -82,7 +82,6 @@ namespace OOP.Shape.Factory
 
         public static List<string> GetAvailableShapes()
         {
-            //return shapeInfo.Keys.ToList();
             var shapes = new List<string>(shapeInfo.Keys);
             shapes.AddRange(pluginShapes.Keys);
             return shapes;

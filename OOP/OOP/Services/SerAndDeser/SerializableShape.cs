@@ -17,5 +17,6 @@ namespace OOP.Services.SerAndDeser
         public double Width { get; set; }
         public double Height { get; set; }
         public List<double[]> Points { get; set; }
+        public Dictionary<string, object> CustomProperties { get; set; }
     }
 }

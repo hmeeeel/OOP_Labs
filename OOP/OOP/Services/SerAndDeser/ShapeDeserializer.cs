@@ -1,10 +1,12 @@
-﻿using OOP.Core.AbstractClasses;
+﻿using Newtonsoft.Json;
+using OOP.Core.AbstractClasses;
 using OOP.Core.Interfaces;
 using OOP.Shape.Factory;
 using OOP.Shape.Implementations;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +16,32 @@ namespace OOP.Services.SerAndDeser
 {
     public class ShapeDeserializer
     {
+        private static Dictionary<string, IDeserializer> deserializers = new Dictionary<string, IDeserializer>();
+
+        static ShapeDeserializer()
+        {
+            RegisterDeserializers();
+        }
+
+        private static void RegisterDeserializers()
+        {
+            var deserializerTypes = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => typeof(IDeserializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
+
+            foreach (var type in deserializerTypes)
+            {
+                var deserializer = (IDeserializer)Activator.CreateInstance(type);
+                deserializers[deserializer.Name] = deserializer;
+
+            }
+        }
+
+        public static void RegisterPluginDeserializer(IDeserializer deserializer)
+        {
+            if (deserializer != null) deserializers[deserializer.Name] = deserializer;
+            
+        }
 
         public static List<IDraw> LoadFromFile(string filePath, Canvas canvas)
         {
@@ -24,12 +52,11 @@ namespace OOP.Services.SerAndDeser
             try
             {
                 string jsonString = File.ReadAllText(filePath);
-
-                var serializableShapes = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SerializableShape>>(jsonString);
+                var serializableShapes = JsonConvert.DeserializeObject<List<SerializableShape>>(jsonString);
 
                 foreach (var serializableShape in serializableShapes)
                 {
-                    IDraw shape = ConvertToShape(serializableShape);
+                    IDraw shape = DeserializeShape(serializableShape);
                     if (shape != null)
                     {
                         shape.Draw(canvas);
@@ -39,91 +66,51 @@ namespace OOP.Services.SerAndDeser
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"ОШИБКА: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка загрузки файла: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return loadedShapes;
         }
 
-        private static IDraw ConvertToShape(SerializableShape serializableShape)
+        private static bool warning= false;
+        private static IDraw DeserializeShape(SerializableShape serializableShape)
         {
-            Brush penColor = HexToBrush(serializableShape.PenColor);
-            Brush fillColor = HexToBrush(serializableShape.Fill);
+            if (serializableShape == null || string.IsNullOrEmpty(serializableShape.Type)) return null;
 
-            switch (serializableShape.Type)
+            if (deserializers.TryGetValue(serializableShape.Type, out var deserializer))
             {
-                case "Lines":
-                    return new Lines(
-                        penColor,
-                        serializableShape.PenWidth,
-                        new Point(serializableShape.StartPoint[0], serializableShape.StartPoint[1]),
-                        new Point(serializableShape.EndPoint[0], serializableShape.EndPoint[1])
-                    );
-
-                case "Rectangles":
-                    return new Rectangles(
-                        penColor,
-                        serializableShape.PenWidth,
-                        new Point(serializableShape.StartPoint[0], serializableShape.StartPoint[1]),
-                        serializableShape.Width,
-                        serializableShape.Height,
-                        fillColor
-                    );
-
-                case "Ellipses":
-                    return new Ellipses(
-                        penColor,
-                        serializableShape.PenWidth,
-                        new Point(serializableShape.StartPoint[0], serializableShape.StartPoint[1]),
-                        serializableShape.Width,
-                        serializableShape.Height,
-                        fillColor
-                    );
-
-                case "Polylines":
-                    return new Polylines(
-                        penColor,
-                        serializableShape.PenWidth,
-                        ConvertToPointList(serializableShape.Points)
-                    );
-
-                case "Polygons":
-                    return new Polygons(
-                        penColor,
-                        serializableShape.PenWidth,
-                        ConvertToPointList(serializableShape.Points),
-                        fillColor
-                    );
-
-                default:
-                    MessageBox.Show($"--: {serializableShape.Type}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return null;
+                return deserializer.Deserialize(serializableShape);
             }
+
+            if (!warning)
+            {
+                MessageBox.Show($"Не найден десериализатор для типа: {serializableShape.Type}", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Warning);
+                warning = true;
+            }
+            return null;
         }
 
-        private static List<Point> ConvertToPointList(List<double[]> points)
+        public static Brush HexToBrush(string hex)
         {
-            List<Point> result = new List<Point>();
-            foreach (var point in points)
-            {
-                result.Add(new Point(point[0], point[1]));
-            }
-            return result;
+            if (string.IsNullOrEmpty(hex)) return Brushes.Transparent;
+
+            if (ColorConverter.ConvertFromString(hex) is Color color) return new SolidColorBrush(color);
+
+            return Brushes.Black;
         }
 
-        private static Brush HexToBrush(string hex)
+        public static Point DoubleArrayToPoint(double[] array)
         {
-            if (string.IsNullOrEmpty(hex))
-                return Brushes.Transparent;
+            if (array == null || array.Length < 2) return new Point(0, 0);
 
-            try
-            {
-                return (Brush)new BrushConverter().ConvertFrom(hex);
-            }
-            catch
-            {
-                return Brushes.Black; 
-            }
+            return new Point(array[0], array[1]);
+        }
+
+        public static List<Point> ConvertToPointList(List<double[]> points)
+        {
+            if (points == null) return new List<Point>();
+
+            return points.Select(p => DoubleArrayToPoint(p)).ToList();
         }
     }
 }

@@ -1,22 +1,21 @@
-// Файл: TrapezoidPlugin/Trapezoid.cs
-using OOP.Core.AbstractClasses; // Путь к PolyBase
-using OOP.Core.Interfaces;    // Путь к IDraw
-using OOP.Services;           // Путь к JsonSerializationUtils
+using OOP.Core.AbstractClasses; 
+using OOP.Core.Interfaces;    
+using OOP.Services;          
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes; // Для Polygon (внутренний элемент PolyBase)
-using Newtonsoft.Json; // Для JsonIgnore, если потребуется
+using System.Windows.Shapes; 
+using Newtonsoft.Json;
+using OOP.Services.SerAndDeser;
+using OOP.Shape.Implementations;
 namespace TrapezoidPlugin
 {
     public class TrapezoidPlugin : IPlugin
     {
         public string Name => "Trapezoid";
-        public string Description => "A plugin that adds trapezoid shape functionality";
-       // public string Version => "1.0.0";
+        public string Description => "Плагин для создания трапеций";
         public Type ShapeType => typeof(Trapezoid);
-
         public IDraw CreateShape()
         {
             return new Trapezoid(Brushes.Black, 2, new Point(0, 0), 0, 0, 0, Brushes.Transparent);
@@ -37,9 +36,8 @@ namespace TrapezoidPlugin
             PositionStart = start;
             Width = width;
             Height = height;
-            TopWidth = topWidth > 0 ? topWidth : width * 0.7; // Default top width if not provided
+            TopWidth = topWidth > 0 ? topWidth : width * 0.7;
             Fill = fill;
-
             InitializeShape();
         }
 
@@ -51,7 +49,6 @@ namespace TrapezoidPlugin
                 StrokeThickness = PenWidth,
                 Fill = Fill
             };
-
             UpdatePoints();
         }
 
@@ -59,16 +56,10 @@ namespace TrapezoidPlugin
         {
             PointCollection points = new PointCollection();
             double offset = (Width - TopWidth) / 2;
-
-            // Bottom-left point
-            points.Add(new Point(0, Height));
-            // Bottom-right point
-            points.Add(new Point(Width, Height));
-            // Top-right point
-            points.Add(new Point(Width - offset, 0));
-            // Top-left point
-            points.Add(new Point(offset, 0));
-
+            points.Add(new Point(0, Height));           // н л
+            points.Add(new Point(Width, Height));       // н п
+            points.Add(new Point(Width - offset, 0));   // в п
+            points.Add(new Point(offset, 0));           // в л
             trapezoid.Points = points;
         }
 
@@ -78,7 +69,6 @@ namespace TrapezoidPlugin
             {
                 canvas.Children.Add(trapezoid);
             }
-
             Canvas.SetLeft(trapezoid, PositionStart.X);
             Canvas.SetTop(trapezoid, PositionStart.Y);
         }
@@ -95,12 +85,10 @@ namespace TrapezoidPlugin
         public override void UpdateDraw(Point newPoint)
         {
             if (!IsDrawing) return;
-
             Width = Math.Abs(newPoint.X - PositionStart.X);
             Height = Math.Abs(newPoint.Y - PositionStart.Y);
-            TopWidth = Width * 0.7; // Make top width 70% of bottom width
+            TopWidth = Width * 0.7;
 
-            // Update position if drawing in negative direction
             if (newPoint.X < PositionStart.X || newPoint.Y < PositionStart.Y)
             {
                 Point newStart = new Point(
@@ -111,6 +99,58 @@ namespace TrapezoidPlugin
             }
 
             UpdatePoints();
+        }
+    }
+
+    public class TrapezoidSerializer : SerializerBase
+    {
+        public override string Name => "Trapezoid";
+
+        public override SerializableShape Serialize(IDraw shape)
+        {
+            var trapezoid = shape as Trapezoid;
+
+            var serializableShape = CreateBaseShape((ShapeBase)shape);
+            serializableShape.StartPoint = new double[] { trapezoid.PositionStart.X, trapezoid.PositionStart.Y };
+            serializableShape.Width = trapezoid.Width;
+            serializableShape.Height = trapezoid.Height;
+
+            if (serializableShape.CustomProperties == null)
+                serializableShape.CustomProperties = new Dictionary<string, object>();
+
+            serializableShape.CustomProperties["TopWidth"] = trapezoid.TopWidth;
+
+            return serializableShape;
+        }
+    }
+
+    public class TrapezoidDeserializer : DeserializerBase
+    {
+        public override string Name => "Trapezoid";
+
+        public override IDraw Deserialize(SerializableShape shape)
+        {
+            var (penColor, penWidth, fillColor) = GetCommonProperties(shape);
+
+            Point startPoint = ShapeDeserializer.DoubleArrayToPoint(shape.StartPoint);
+
+            double topWidth = shape.Width * 0.7; 
+
+            if (shape.CustomProperties != null && shape.CustomProperties.ContainsKey("TopWidth"))
+            {
+                var topWidthObj = shape.CustomProperties["TopWidth"];
+                topWidth = topWidthObj as double? ?? Convert.ToDouble(topWidthObj);
+            }
+
+            return new Trapezoid(
+                penColor,
+                penWidth,
+                startPoint,
+                shape.Width,
+                shape.Height,
+                topWidth,
+                fillColor
+            );
         }
     }
 }

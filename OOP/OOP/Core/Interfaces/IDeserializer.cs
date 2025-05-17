@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace OOP.Core.Interfaces
 {
-    public interface IPlugin
+    public interface IDeserializer
     {
         string Name { get; }
-        string Description { get; }
-        Type ShapeType { get; }
-        IDraw CreateShape();
+        IDraw Deserialize(SerializableShape serializableShape);
     }
 }

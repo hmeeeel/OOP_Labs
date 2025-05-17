@@ -23,11 +23,9 @@ namespace OOP;
 public partial class MainWindow : Window
 {
 
-    private List<IDraw> shapes = new List<IDraw>(); // все фигуры на холсте
-    // private ShapeCreate shapeFactory = new ShapeCreate(); // создание фигур
+    private List<IDraw> shapes = new List<IDraw>(); 
     private ShapeCreateNew shapeFactory = new ShapeCreateNew();
     private UndoOrRedo commandManager = new UndoOrRedo();
-    //private UndoOrRedoList commandManager = new UndoOrRedoList();
     private UIManager uiManager;
     private MouseHandler mouseHandler;
 
@@ -127,54 +125,18 @@ public partial class MainWindow : Window
         uiManager.UpdateUndoRedoButton();
     }
 
-
     private void btnSave_Click(object sender, RoutedEventArgs e)
     {
-        SaveFileDialog saveFileDialog = new SaveFileDialog
-        {
-            Filter = "JSON файлы (*.json)|*.json",
-            Title = "Сохранить фигуры",
-            DefaultExt = "json"
-        };
-
-        if (saveFileDialog.ShowDialog() == true)
-        {
-            var saveCommand = new SaveShape(canvas, shapes, saveFileDialog.FileName);
-            saveCommand.Execute();
-        }
+        uiManager.SaveShapes();
     }
 
     private void btnLoad_Click(object sender, RoutedEventArgs e)
     {
-        OpenFileDialog openFileDialog = new OpenFileDialog
-        {
-            Filter = "JSON файлы (*.json)|*.json",
-            Title = "Загрузить фигуры"
-        };
-
-        if (openFileDialog.ShowDialog() == true)
-        {
-            List<IDraw> previousState = new List<IDraw>(shapes);
-
-            canvas.Children.Clear();
-            shapes.Clear();
-
-            List<IDraw> loadedShapes = ShapeDeserializer.LoadFromFile(openFileDialog.FileName, canvas);
-            canvas.Children.Clear();
-
-            foreach (var shape in loadedShapes)
-            {
-                var addCommand = new AddShape(canvas, shape, shapes);
-                commandManager.ExecuteCommand(addCommand);
-            }
-
-            uiManager.UpdateUndoRedoButton();
-        }
+        uiManager.LoadShapes();
     }
 
     private void btnAddPlugin_Click(object sender, RoutedEventArgs e)
     {
-        //uiManager.AddShapeButtons();
         uiManager.LoadPlugin();
     }
 }

@@ -10,70 +10,110 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Media;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace OOP.Services.SerAndDeser
 {
     public class ShapeSerializer
     {
-        public static void SaveShapesToFile(List<IDraw> shapes, string filePath)
-        {
-            List<SerializableShape> serializableShapes = new List<SerializableShape>();
+        private static Dictionary<string, ISerializer> serializers = new Dictionary<string, ISerializer>();
 
-            foreach (IDraw shape in shapes)
+        static ShapeSerializer()
+        {
+            RegisterSerializers();
+        }
+
+        private static void RegisterSerializers()
+        {
+            var serializerTypes = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => typeof(ISerializer).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract);
+
+            foreach (var type in serializerTypes)
             {
-                SerializableShape serializableShape = ConvertToSerializableShape(shape);
-                if (serializableShape != null) serializableShapes.Add(serializableShape);
+                var serializer = (ISerializer)Activator.CreateInstance(type);
+                serializers[serializer.Name] = serializer;
             }
+        }
+
+        public static void SaveToFile(List<IDraw> shapes, string filePath)
+        {
+            var serializableShapes = shapes
+                .Select(shape => ConvertToSer(shape))
+                .Where(s => s != null)
+                .ToList();
 
             string jsonString = JsonConvert.SerializeObject(serializableShapes, Formatting.Indented);
-
             File.WriteAllText(filePath, jsonString);
         }
 
-        private static SerializableShape ConvertToSerializableShape(IDraw shape)
+        private static SerializableShape ConvertToSer(IDraw shape)
         {
-            string shapeType = shape.GetType().Name;
+            if (shape == null) return null;
 
-            SerializableShape serializableShape = new SerializableShape
-            {
-                Type = shapeType,
-                PenColor = ColorToHex(shape is ShapeBase ? ((ShapeBase)shape).PenColor : Brushes.Black),
-                PenWidth = shape is ShapeBase ? ((ShapeBase)shape).PenWidth : 1,
-                Fill = shape is ShapeBase ? ColorToHex(((ShapeBase)shape).Fill) : "#00000000"
-            };
+            string typeName = shape.GetType().Name;
 
-            if (shape is Lines)
-            {
-                Lines line = (Lines)shape;
-                serializableShape.StartPoint = new double[] { line.PositionStart.X, line.PositionStart.Y };
-                serializableShape.EndPoint = new double[] { line.PositionEnd.X, line.PositionEnd.Y };
-            }
-            else if (shape is RectangleBase)
-            {
-                RectangleBase rectBase = (RectangleBase)shape;
-                serializableShape.StartPoint = new double[] { rectBase.PositionStart.X, rectBase.PositionStart.Y };
-                serializableShape.Width = rectBase.Width;
-                serializableShape.Height = rectBase.Height;
-            }
-            else if (shape is PolyBase)
-            {
-                PolyBase polyBase = (PolyBase)shape;
-                serializableShape.Points = polyBase.Points.Select(p => new double[] { p.X, p.Y }).ToList();
-            }
+            ISerializer serializer = FindSerializer(shape);
 
-            return serializableShape;
+            if (serializer != null) return serializer.Serialize(shape);
+            else return CreateDefSer(shape);
         }
 
-        private static string ColorToHex(Brush brush)
+        private static ISerializer FindSerializer(IDraw shape)
         {
-            if (brush == null) return "#00000000"; 
+            string typeName = shape.GetType().Name;
 
+            if (serializers.TryGetValue(typeName, out var serializer))
+            {
+                return serializer;
+            }
+
+            foreach (var entry in serializers)
+            {
+                Type baseType = Type.GetType(entry.Key) ?? AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.Name == entry.Key);
+
+                if (baseType != null && baseType.IsAssignableFrom(shape.GetType()))
+                {
+                    return entry.Value;
+                }
+            }
+
+            return null;
+        }
+
+        private static SerializableShape CreateDefSer(IDraw shape)
+        {
+            if (shape is ShapeBase shapeBase)
+            {
+                return new SerializableShape
+                {
+                    Type = shape.GetType().Name,
+                    PenColor = ColorToHex(shapeBase.PenColor ?? Brushes.Black),
+                    PenWidth = shapeBase.PenWidth,
+                    Fill = ColorToHex(shapeBase.Fill ?? Brushes.Transparent)
+                };
+            }
+
+            return new SerializableShape
+            {
+                Type = shape.GetType().Name
+            };
+        }
+
+        public static string ColorToHex(Brush brush)
+        {
             if (brush is SolidColorBrush solidBrush)
             {
-                Color color = solidBrush.Color;
-                return $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
+                return $"#{solidBrush.Color.R:X2}{solidBrush.Color.G:X2}{solidBrush.Color.B:X2}";
             }
-            return "#00000000"; 
+            return "#000000"; 
         }
-    }  
+        public static void RegisterPluginSerializer(ISerializer serializer)
+        {
+            if (serializer != null)
+            {
+                serializers[serializer.Name] = serializer;
+            }
+        }
+    }
 }

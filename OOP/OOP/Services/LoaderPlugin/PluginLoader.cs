@@ -1,4 +1,5 @@
 ﻿using OOP.Core.Interfaces;
+using OOP.Services.SerAndDeser;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,21 +14,18 @@ namespace OOP.Services.Plugin
     public class PluginLoader
     {
         private Dictionary<string, IPlugin> loadedPlugins;
-
         public PluginLoader()
         {
             loadedPlugins = new Dictionary<string, IPlugin>();
         }
-
         public IReadOnlyDictionary<string, IPlugin> LoadedPlugins => loadedPlugins;
-
         public bool LoadPlugin(string pluginPath)
         {
             try
             {
                 if (!File.Exists(pluginPath))
                 {
-                    MessageBox.Show($"Не найден: {pluginPath}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Файл плагина не найден: {pluginPath}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
 
@@ -43,21 +41,20 @@ namespace OOP.Services.Plugin
 
                         if (loadedPlugins.ContainsKey(pluginName))
                         {
-                            MessageBox.Show($"Имя '{pluginName}' ", "Плагин загружен", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show($"Плагин с именем '{pluginName}' уже загружен", "Дубликат плагина", MessageBoxButton.OK, MessageBoxImage.Warning);
                             continue;
                         }
 
                         loadedPlugins.Add(pluginName, plugin);
                         pluginFound = true;
 
-                       // MessageBox.Show($"Plugin '{plugin.Name} v{plugin.Version}' loaded successfully.\n{plugin.Description}",
-                          //  "Plugin Loaded", MessageBoxButton.OK, MessageBoxImage.Information);
+                        RegisterPluginSerializers(pluginAssembly, plugin.ShapeType);
                     }
                 }
 
                 if (!pluginFound)
                 {
-                    MessageBox.Show("В выбранном файле не найдено допустимых плагинов.", "Не найдено", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("Не найдено допустимых плагинов.", "Плагин не найден", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return false;
                 }
 
@@ -65,8 +62,26 @@ namespace OOP.Services.Plugin
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка: {ex.Message}","Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка при загрузке плагина: {ex.Message}","Ошибка загрузки", MessageBoxButton.OK, MessageBoxImage.Error);
                 return false;
+            }
+        }
+
+        private void RegisterPluginSerializers(Assembly pluginAssembly, Type shapeType)
+        {
+            foreach (Type type in pluginAssembly.GetExportedTypes())
+            {
+                if (typeof(ISerializer).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
+                {
+                    var serializer = (ISerializer)Activator.CreateInstance(type);
+                    ShapeSerializer.RegisterPluginSerializer(serializer);
+                }
+
+                if (typeof(IDeserializer).IsAssignableFrom(type) && !type.IsInterface && !type.IsAbstract)
+                {
+                    var deserializer = (IDeserializer)Activator.CreateInstance(type);
+                    ShapeDeserializer.RegisterPluginDeserializer(deserializer);
+                }
             }
         }
     }
