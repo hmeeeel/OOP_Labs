@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
+
 namespace OOP.Core.AbstractClasses
 {
     public abstract class SerializerBase : ISerializer

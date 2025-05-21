@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOP", "OOP\OOP.csproj", "{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrapezoidPlugin", "TrapezoidPlugin2\TrapezoidPlugin.csproj", "{BDE3D4B8-4A05-40A3-B574-99D93754DF14}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA} = {C5ECE7F6-AA68-4B6A-B0BC-9AA5312A19EA}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
